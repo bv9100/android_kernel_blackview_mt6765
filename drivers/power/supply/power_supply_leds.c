@@ -16,8 +16,16 @@
 #include <linux/slab.h>
 
 #include "power_supply.h"
+#include <mt-plat/mtk_boot.h>
+#include <linux/hct_include/hct_project_all_config.h>    //hct-drv add for tpgesture by qhs
 
 /* Battery specific LEDs triggers. */
+#if defined(__HCT_BREATH_LIGHT_SUPPORT__)
+#if __HCT_BREATH_LIGHT_SUPPORT__
+extern void aw2103_poweroff_indication(int onoff,int mode,int led_brightness);
+extern signed int battery_get_uisoc(void);
+#endif
+#endif
 
 static void power_supply_update_bat_leds(struct power_supply *psy)
 {
@@ -25,6 +33,20 @@ static void power_supply_update_bat_leds(struct power_supply *psy)
 	unsigned long delay_on = 0;
 	unsigned long delay_off = 0;
 
+#if defined(__HCT_BREATH_LIGHT_SUPPORT__)
+#if __HCT_BREATH_LIGHT_SUPPORT__
+	int boot_mode = get_boot_mode();
+	int poweroffmode = 0;
+	signed int ui_percentage = battery_get_uisoc();
+
+	if (boot_mode == LOW_POWER_OFF_CHARGING_BOOT
+	    || boot_mode == KERNEL_POWER_OFF_CHARGING_BOOT) {
+                poweroffmode = 1;
+        }
+#endif
+#endif
+
+ 
 	if (power_supply_get_property(psy, POWER_SUPPLY_PROP_STATUS, &status))
 		return;
 
@@ -37,6 +59,21 @@ static void power_supply_update_bat_leds(struct power_supply *psy)
 		led_trigger_event(psy->full_trig, LED_FULL);
 		led_trigger_event(psy->charging_blink_full_solid_trig,
 			LED_FULL);
+        #if defined(__HCT_BREATH_LIGHT_SUPPORT__)
+        #if __HCT_BREATH_LIGHT_SUPPORT__
+            if(poweroffmode){
+                if(ui_percentage >= 100){
+                    aw2103_poweroff_indication(1, 8, 50);
+                }
+                else if (ui_percentage > 0){
+                    aw2103_poweroff_indication(1, 9, 50);
+                }
+                else{
+                    //maybe is -1, do nothing.
+                }
+            }
+        #endif
+        #endif
 		break;
 	case POWER_SUPPLY_STATUS_CHARGING:
 		led_trigger_event(psy->charging_full_trig, LED_FULL);
@@ -44,13 +81,36 @@ static void power_supply_update_bat_leds(struct power_supply *psy)
 		led_trigger_event(psy->full_trig, LED_OFF);
 		led_trigger_blink(psy->charging_blink_full_solid_trig,
 			&delay_on, &delay_off);
+		#if defined(__HCT_BREATH_LIGHT_SUPPORT__)
+		#if __HCT_BREATH_LIGHT_SUPPORT__                    
+			if(poweroffmode){
+                if(ui_percentage >= 100){
+                    aw2103_poweroff_indication(1, 8, 50);
+                }
+                else if (ui_percentage > 0){
+                    aw2103_poweroff_indication(1, 9, 50);
+                }
+                else{
+                    //maybe is -1, do nothing.
+                }
+			}
+		#endif
+		#endif
 		break;
-	default:
+	default: //discharging
 		led_trigger_event(psy->charging_full_trig, LED_OFF);
 		led_trigger_event(psy->charging_trig, LED_OFF);
 		led_trigger_event(psy->full_trig, LED_OFF);
 		led_trigger_event(psy->charging_blink_full_solid_trig,
 			LED_OFF);
+		#if defined(__HCT_BREATH_LIGHT_SUPPORT__)
+		#if __HCT_BREATH_LIGHT_SUPPORT__                    
+			if(poweroffmode){
+				aw2103_poweroff_indication(0,0,50);
+			}
+		#endif
+		#endif
+        
 		break;
 	}
 }
@@ -115,6 +175,19 @@ static void power_supply_update_gen_leds(struct power_supply *psy)
 {
 	union power_supply_propval online;
 
+#if defined(__HCT_BREATH_LIGHT_SUPPORT__)
+#if __HCT_BREATH_LIGHT_SUPPORT__
+        int boot_mode = get_boot_mode();
+        int poweroffmode = 0;
+        signed int ui_percentage = battery_get_uisoc();
+    
+        if (boot_mode == LOW_POWER_OFF_CHARGING_BOOT
+            || boot_mode == KERNEL_POWER_OFF_CHARGING_BOOT) {
+                    poweroffmode = 1;
+            }
+#endif
+#endif
+
 	if (power_supply_get_property(psy, POWER_SUPPLY_PROP_ONLINE, &online))
 		return;
 
@@ -124,6 +197,29 @@ static void power_supply_update_gen_leds(struct power_supply *psy)
 		led_trigger_event(psy->online_trig, LED_FULL);
 	else
 		led_trigger_event(psy->online_trig, LED_OFF);
+
+#if defined(__HCT_BREATH_LIGHT_SUPPORT__)
+#if __HCT_BREATH_LIGHT_SUPPORT__            
+        if(poweroffmode){
+            if(online.intval ){
+                if(ui_percentage >= 100){
+                    aw2103_poweroff_indication(1, 8, 50);
+                }
+                else if (ui_percentage > 0){
+                    aw2103_poweroff_indication(1, 9, 50);
+                }
+                else{
+                    //maybe is -1, do nothing.
+                }
+            }
+            else{
+               // aw2103_poweroff_indication(0,0,50);
+            }
+        }
+#endif
+#endif
+
+    
 }
 
 static int power_supply_create_gen_triggers(struct power_supply *psy)

@@ -1,0 +1,3 @@
+config FINGERPRINT_CDFINGER_TEE
+        bool "FINGERPRINT_CDFINGER_TEE"
+        default n

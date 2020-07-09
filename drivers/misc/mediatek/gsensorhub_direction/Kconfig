@@ -1,0 +1,10 @@
+
+config MTK_GSENSORHUB_DIRECTION
+	bool "gsensorhub_direction for MediaTek package"
+	default n
+	help
+	  It support an direction for accelerometer and gyroscope sensorhub.
+	  If this option is set,
+	  it will support
+	  gsensorhub_direction.
+

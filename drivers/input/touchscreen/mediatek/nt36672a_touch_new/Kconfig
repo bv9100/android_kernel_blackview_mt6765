@@ -1,0 +1,7 @@
+#
+# Touchscreen driver configuration
+#
+if TOUCHSCREEN_NT36672A_NEW
+
+
+endif

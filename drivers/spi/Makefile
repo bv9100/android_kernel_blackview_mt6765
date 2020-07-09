@@ -4,6 +4,9 @@
 
 ccflags-$(CONFIG_SPI_DEBUG) := -DDEBUG
 
+ifeq ($(CONFIG_TRUSTKERNEL_TEE_SUPPORT),y)
+ccflags-y += -I$(srctree)/drivers/misc/mediatek/tkcore/include
+endif
 # small core, mostly translating board-specific
 # config declarations into driver model code
 obj-$(CONFIG_SPI_MASTER)		+= spi.o
@@ -54,7 +57,9 @@ obj-$(CONFIG_SPI_MESON_SPIFC)		+= spi-meson-spifc.o
 obj-$(CONFIG_SPI_MPC512x_PSC)		+= spi-mpc512x-psc.o
 obj-$(CONFIG_SPI_MPC52xx_PSC)		+= spi-mpc52xx-psc.o
 obj-$(CONFIG_SPI_MPC52xx)		+= spi-mpc52xx.o
+obj-$(CONFIG_SPIS_MT27XX)		+= spis-mt27xx.o spis-mt27xx-test.o
 obj-$(CONFIG_SPI_MT65XX)                += spi-mt65xx.o
+obj-$(CONFIG_SPI_MT65XX)                += spi-mt65xx-dev.o
 obj-$(CONFIG_SPI_MXS)			+= spi-mxs.o
 obj-$(CONFIG_SPI_NUC900)		+= spi-nuc900.o
 obj-$(CONFIG_SPI_OC_TINY)		+= spi-oc-tiny.o

@@ -1,0 +1,50 @@
+/* Copyright (c) 2016, The Linux Foundation. All rights reserved.          
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&i2c5 {
+	psc5415a@6a{
+		compatible = "prisemi,psc5415a";
+		reg = <0x6a>;
+		charger_name = "primary_chg";
+		alias_name = "psc5415a";
+		pinctrl-names = "default","psc_chg_en_low","psc_chg_en_high";
+		pinctrl-0 = <&chg_en_default>;
+		pinctrl-1 = <&chg_en_low>;
+		pinctrl-2 = <&chg_en_high>;
+		status = "okay";
+	};
+
+};
+
+&pio {
+	chg_en_default: chg_en_default {
+	};
+
+	chg_en_low: chg_en_low {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO154__FUNC_GPIO154>;
+			slew-rate = <1>;
+			bias-disable;
+			output-low;
+		};
+	};
+
+	chg_en_high: chg_en_high {
+		pins_cmd_dat {
+			pinmux = <PINMUX_GPIO154__FUNC_GPIO154>;
+			slew-rate = <1>;
+			bias-disable;
+			output-high;
+		};
+	};
+
+};

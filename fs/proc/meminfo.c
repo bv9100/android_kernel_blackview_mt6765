@@ -50,6 +50,9 @@ static int meminfo_proc_show(struct seq_file *m, void *v)
 	long available;
 	unsigned long pages[NR_LRU_LISTS];
 	int lru;
+	unsigned long fakeram4 = 1048576;
+        unsigned long fakeram6 = 1572864;
+        unsigned long fakeram;
 
 	si_meminfo(&i);
 	si_swapinfo(&i);
@@ -59,13 +62,18 @@ static int meminfo_proc_show(struct seq_file *m, void *v)
 			total_swapcache_pages() - i.bufferram;
 	if (cached < 0)
 		cached = 0;
+	if(i.totalram < fakeram4){
+                 fakeram = fakeram4;
+         }else{
+                 fakeram = fakeram6;      
+         }
 
 	for (lru = LRU_BASE; lru < NR_LRU_LISTS; lru++)
 		pages[lru] = global_node_page_state(NR_LRU_BASE + lru);
 
 	available = si_mem_available();
 
-	show_val_kb(m, "MemTotal:       ", i.totalram);
+	show_val_kb(m, "MemTotal:       ", fakeram);
 	show_val_kb(m, "MemFree:        ", i.freeram);
 	show_val_kb(m, "MemAvailable:   ", available);
 	show_val_kb(m, "Buffers:        ", i.bufferram);

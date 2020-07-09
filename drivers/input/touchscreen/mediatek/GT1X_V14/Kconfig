@@ -1,0 +1,15 @@
+#
+# Touchscreen driver configuration
+#
+if TOUCHSCREEN_MTK_GT1X_V14
+
+config GTP_HOTKNOT
+	bool "GT1151 for Mediatek package"
+	default n
+	help
+	  Say Y here if you have GT1X_V14 touch panel GTP_HOTKNOT.
+	  If unsure, say N.
+	  To compile this dirver as a module, choose M here: the
+	  module will be called.
+
+endif

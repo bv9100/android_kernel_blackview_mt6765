@@ -1,0 +1,4 @@
+
+config MTK_STK3338V
+	bool "STK3338V for MediaTek package"
+	default n

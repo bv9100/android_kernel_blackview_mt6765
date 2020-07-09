@@ -1,0 +1,4 @@
+
+config DISCRETEALSPS
+	bool "DiscreteALSPS for MediaTek package"
+	default n

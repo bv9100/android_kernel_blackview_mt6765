@@ -1,0 +1,7 @@
+config FINGERPRINT_CDFINGER_FPS988E
+        bool "FINGERPRINT_CDFINGER_FPS988E"
+        default n
+
+config FINGERPRINT_CDFINGER_FPS988E_TEE
+        bool "FINGERPRINT_CDFINGER_FPS988E_TEE"
+        default n
