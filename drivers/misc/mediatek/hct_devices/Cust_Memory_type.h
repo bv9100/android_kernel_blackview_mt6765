@@ -1,1 +1,4 @@
-../../../../../vendor/mediatek/proprietary/bootable/bootloader/preloader/Cust_Memory_type.h
+#define EMMC_COMPATIBLE_NUM 9
+
+char Cust_emmc_support[9][50] = {"KM3H6001CM_B515", "H9HP52AECMMDBR_KUM", "KM3H6001CA_B515", "SDADA4DR_64G", "H9HP52AECMMDAR_KMM", "KMRH60014A_B614", "MT29TZZZAD8DKKBT_107_W_9F8", "MT29TZZZAD8DKKFB_107W_9N8", "KMRC10014M_B809"};
+char CUSTOM_MODEM[]="m860_TK_MD_BASIC-LWTG_R3_6765-fdd4m_gsm4_w12458_tdd40_fdd12345781217181920252666_tiaoxie_airoha_cotsx";
