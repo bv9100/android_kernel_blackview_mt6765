@@ -210,7 +210,6 @@ ext4_xattr_check_block(struct inode *inode, struct buffer_head *bh)
 	if (BHDR(bh)->h_magic != cpu_to_le32(EXT4_XATTR_MAGIC) ||
 	    BHDR(bh)->h_blocks != cpu_to_le32(1))
 		return -EFSCORRUPTED;
-
 	if (buffer_verified(bh))
 		return 0;
 
@@ -645,7 +644,7 @@ static size_t ext4_xattr_free_space(struct ext4_xattr_entry *last,
 
 static int
 ext4_xattr_set_entry(struct ext4_xattr_info *i, struct ext4_xattr_search *s,
-	struct inode *inode)
+		     struct inode *inode)
 {
 	struct ext4_xattr_entry *last, *next;
 	size_t free, min_offs = s->end - s->base, name_len = strlen(i->name);
@@ -656,7 +655,7 @@ ext4_xattr_set_entry(struct ext4_xattr_info *i, struct ext4_xattr_search *s,
 		next = EXT4_XATTR_NEXT(last);
 		if ((void *)next >= s->end) {
 			EXT4_ERROR_INODE(inode, "corrupted xattr entries");
-			return -EFSCORRUPTED;
+			return -EIO;
 		}
 		if (last->e_value_size) {
 			size_t offs = le16_to_cpu(last->e_value_offs);
