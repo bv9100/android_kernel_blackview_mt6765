@@ -20,9 +20,9 @@ bat_gm30: battery{
 	EMBEDDED_SEL = <(1)>;	/*	Configures whether using embedded battery or not.*/
 	PMIC_SHUTDOWN_CURRENT = <(20)>;	/*	System shutdown current.*/
 	FG_METER_RESISTANCE = <(75)>;	/*	The resistance of PCB*/
-	CAR_TUNE_VALUE = <(81)>;	/*	Tune value for current measurement.*/
+	CAR_TUNE_VALUE = <(83)>;	/*	Tune value for current measurement.*/
 	/*	Battery temperature T0*/
-	PMIC_MIN_VOL = <(34500)>;
+	PMIC_MIN_VOL = <(32500)>;
 	/*	vboot voltage for gauge 0%.*/
 	POWERON_SYSTEM_IBOOT = <(500)>;
 	/*	power on system iboot*/
@@ -31,13 +31,13 @@ bat_gm30: battery{
 	TEMPERATURE_T1 = <(25)>;	/*	Battery temperature T1*/
 	TEMPERATURE_T2 = <(0)>;	/*	Battery temperature T2*/
 	TEMPERATURE_T3 = <(-10)>;	/*	Battery temperature T3*/
-	g_FG_PSEUDO100_T0 = <(98)>;	/*	Pseudo 100% percentage at T0.*/
-	g_FG_PSEUDO100_T1 = <(98)>;	/*	Pseudo 100% percentage at T1.*/
+	g_FG_PSEUDO100_T0 = <(90)>;	/*	Pseudo 100% percentage at T0.*/
+	g_FG_PSEUDO100_T1 = <(90)>;	/*	Pseudo 100% percentage at T1.*/
 	g_FG_PSEUDO100_T2 = <(95)>;	/*	Pseudo 100% percentage at T2.*/
 	g_FG_PSEUDO100_T3 = <(90)>;	/*	Pseudo 100% percentage at T3.*/
-	Q_MAX_SYS_VOLTAGE_BAT0 = <(3400)>;	/*	System shut down voltage.*/
-	Q_MAX_SYS_VOLTAGE_BAT1 = <(3400)>;	/*	System shut down voltage.*/
-	Q_MAX_SYS_VOLTAGE_BAT2 = <(3400)>;	/*	System shut down voltage.*/
-	Q_MAX_SYS_VOLTAGE_BAT3 = <(3400)>;	/*	System shut down voltage.*/
+	Q_MAX_SYS_VOLTAGE_BAT0 = <(3200)>;	/*	System shut down voltage.*/
+	Q_MAX_SYS_VOLTAGE_BAT1 = <(3200)>;	/*	System shut down voltage.*/
+	Q_MAX_SYS_VOLTAGE_BAT2 = <(3200)>;	/*	System shut down voltage.*/
+	Q_MAX_SYS_VOLTAGE_BAT3 = <(3200)>;	/*	System shut down voltage.*/
 #include "mt6765_battery_table.dtsi"
 };
