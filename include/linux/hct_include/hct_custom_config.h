@@ -19,6 +19,8 @@
 
 #define __HCT_VIBRATOR_WHEN_BOOT_UP__ HCT_YES
 
+#define __HCT_CUSTOMKEY_F1_SUPPORT__ HCT_YES
+
 /*############### tpd button key releated config #####################*/
    /*this macro define tp button key y value, if we defined, we use this value,
      if we no define this value , we use default value  2000 */
