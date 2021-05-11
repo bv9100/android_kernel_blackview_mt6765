@@ -157,7 +157,7 @@ static imgsensor_info_struct imgsensor_info = {
     .sensor_interface_type = SENSOR_INTERFACE_TYPE_MIPI,//sensor_interface_type
     .mipi_sensor_type = MIPI_OPHY_NCSI2, //0,MIPI_OPHY_NCSI2;  1,MIPI_OPHY_CSI2
     .mipi_settle_delay_mode = MIPI_SETTLEDELAY_AUTO,//0,MIPI_SETTLEDELAY_AUTO; 1,MIPI_SETTLEDELAY_MANNUAL
-    .sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_R,//sensor output first pixel color
+    .sensor_output_dataformat = SENSOR_OUTPUT_FORMAT_RAW_B,//sensor output first pixel color
     .mclk = 24,//mclk value, suggest 24 or 26 for 24Mhz or 26Mhz
     .mipi_lane_num = SENSOR_MIPI_4_LANE,//mipi lane num
     .i2c_addr_table = { 0x34, 0x20, 0xff},//record sensor support all write id addr, only supprt 4must end with 0xff
@@ -165,7 +165,7 @@ static imgsensor_info_struct imgsensor_info = {
 
 
 static struct imgsensor_struct imgsensor = {
-    .mirror = IMAGE_NORMAL,//IMAGE_NORMAL,                //mirrorflip information
+    .mirror = IMAGE_HV_MIRROR ,//IMAGE_HV_MIRROR,                //mirrorflip information
     .sensor_mode = IMGSENSOR_MODE_INIT, //IMGSENSOR_MODE enum value,record current sensor mode,such as: INIT, Preview, Capture, Video,High Speed Video, Slim Video
     .shutter = 0x3D0,                    //current shutter
     .gain = 0x100,                        //current gain
@@ -2785,7 +2785,7 @@ static kal_uint32 preview(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
 //    {
 		preview_setting(); /*PDAF only*/
 //    }
-      set_mirror_flip(sensor_config_data->SensorImageMirror);
+      set_mirror_flip(IMAGE_HV_MIRROR);
     return ERROR_NONE;
 }    /*    preview   */
 
@@ -2832,6 +2832,7 @@ static kal_uint32 capture(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     else
 		capture_setting(imgsensor.current_fps);/*Full mode*/
 
+    set_mirror_flip(IMAGE_HV_MIRROR);
     return ERROR_NONE;
 }    /* capture() */
 static kal_uint32 normal_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
@@ -2849,7 +2850,7 @@ static kal_uint32 normal_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     imgsensor.autoflicker_en = KAL_FALSE;
     spin_unlock(&imgsensor_drv_lock);
     normal_video_setting(imgsensor.current_fps);
-    set_mirror_flip(sensor_config_data->SensorImageMirror);
+    set_mirror_flip(IMAGE_HV_MIRROR);
     return ERROR_NONE;
 }    /*    normal_video   */
 
@@ -2870,7 +2871,7 @@ static kal_uint32 hs_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     imgsensor.autoflicker_en = KAL_FALSE;
     spin_unlock(&imgsensor_drv_lock);
     hs_video_setting();
-    set_mirror_flip(sensor_config_data->SensorImageMirror);
+    set_mirror_flip(IMAGE_HV_MIRROR);
     return ERROR_NONE;
 }    /*    hs_video   */
 
@@ -2890,7 +2891,7 @@ static kal_uint32 slim_video(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     imgsensor.autoflicker_en = KAL_FALSE;
     spin_unlock(&imgsensor_drv_lock);
     slim_video_setting();
-    set_mirror_flip(sensor_config_data->SensorImageMirror);
+    set_mirror_flip(IMAGE_HV_MIRROR);
 
     return ERROR_NONE;
 }    /*    slim_video     */
@@ -2923,7 +2924,6 @@ static kal_uint32 get_info(enum MSDK_SCENARIO_ID_ENUM scenario_id,
                       MSDK_SENSOR_CONFIG_STRUCT *sensor_config_data)
 {
     LOG_INF("scenario_id = %d\n", scenario_id);
-
 
     //sensor_info->SensorVideoFrameRate = imgsensor_info.normal_video.max_framerate/10; /* not use */
     //sensor_info->SensorStillCaptureFrameRate= imgsensor_info.cap.max_framerate/10; /* not use */
