@@ -35,8 +35,6 @@
 #include "s5k3p9mipiraw_Sensor.h"
 
 
-#define HCT_S5K3P9_OTP_ON
-
 #define PFX "S5K3p9"
 #define LOG_INF_NEW(format, args...)    pr_debug(PFX "[%s] " format, __func__, ##args)
 #define LOG_INF LOG_INF_NEW

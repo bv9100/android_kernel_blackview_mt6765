@@ -31,7 +31,6 @@
 //#define __HCT_DUAL_SUB_CAMERA__  HCT_YES
 
 #define IMX298_OTP
-#define S5K3P3SP_OTP
 
 ////////////////GT9XX _TP CONFIG ///////////////////////////////////
 
