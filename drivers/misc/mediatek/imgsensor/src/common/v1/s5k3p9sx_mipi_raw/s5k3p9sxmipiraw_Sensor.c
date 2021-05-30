@@ -2146,7 +2146,6 @@ static void preview_setting(void)
 
 static void capture_setting(void)
 {
-	LOG_INF("E! currefps:%d\n");
   write_cmos_sensor_8(0x0100, 0x00);
   mdelay(33);
   write_cmos_sensor(0x6028, 0x4000);
@@ -2229,7 +2228,6 @@ static void capture_setting(void)
 
 static void normal_video_setting(void)
 {
-	LOG_INF("E! currefps:%d\n");
   write_cmos_sensor_8(0x0100, 0x00);
   mdelay(33);
   write_cmos_sensor(0x6028, 0x4000);
