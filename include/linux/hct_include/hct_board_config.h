@@ -33,7 +33,7 @@
 #define __HCT_SHUTDOWN_SYSTEM_VOLTAGE__  3300
 #define __HCT_MT6370_AICL_VTH_MAX__  4400000
 /********************sensor old calibraion Interface*************************/
-#define __HCT_MTK_OLD_FACTORY_CALIBRATION__ HCT_YES
+#define __HCT_MTK_OLD_FACTORY_CALIBRATION__ HCT_NO
 /*############### USB OTG releated config--START #####################*/
 
 #define __HCT_USB_MTK_OTG_SUPPORT__  HCT_YES
